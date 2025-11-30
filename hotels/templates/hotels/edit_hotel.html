@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Hotel - Airbnb Clone{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2>Edit Hotel: {{ hotel.title }}</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.title.id_for_label }}" class="form-label">Hotel Title</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="text-danger">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.location.id_for_label }}" class="form-label">Location</label>
+                        {{ form.location }}
+                        {% if form.location.errors %}
+                            <div class="text-danger">{{ form.location.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="text-danger">{{ form.description.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.price_per_night.id_for_label }}" class="form-label">Price per Night ($)</label>
+                        {{ form.price_per_night }}
+                        {% if form.price_per_night.errors %}
+                            <div class="text-danger">{{ form.price_per_night.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.image.id_for_label }}" class="form-label">Hotel Image</label>
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                            <div class="text-danger">{{ form.image.errors }}</div>
+                        {% endif %}
+                        {% if hotel.image %}
+                            <div class="form-text">Current image: <img src="{{ hotel.image.url }}" alt="{{ hotel.title }}" style="max-height: 100px;"></div>
+                        {% endif %}
+                        <div class="form-text">Leave empty to keep current image</div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Update Hotel</button>
+                        <a href="{% url 'hotel_detail' hotel.pk %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

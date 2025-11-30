@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Hotel - Airbnb Clone{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h2>Delete Hotel</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <h5>Are you sure you want to delete "{{ hotel.title }}"?</h5>
+                    <p>This action cannot be undone. All data associated with this hotel will be permanently deleted.</p>
+                </div>
+
+                {% if hotel.image %}
+                    <div class="mb-3">
+                        <img src="{{ hotel.image.url }}" alt="{{ hotel.title }}" class="img-fluid rounded">
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <strong>Hotel Details:</strong><br>
+                    <span class="text-muted">Location:</span> {{ hotel.location }}<br>
+                    <span class="text-muted">Price:</span> ${{ hotel.price_per_night }}/night<br>
+                    <span class="text-muted">Description:</span> {{ hotel.description|truncatewords:20 }}
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">Yes, Delete Hotel</button>
+                        <a href="{% url 'hotel_detail' hotel.pk %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
